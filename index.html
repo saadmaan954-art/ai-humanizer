@@ -1,84 +1,100 @@
-<!DOCTYPE html>
+ ​<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+<head>  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Humanizer | Elite Tier</title>
     <style>
         body {
-            background-color: #000;
+            background-color: #050505;
             color: #00ffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
         .container {
-            border: 2px solid #00ffff;
-            border-radius: 20px;
-            padding: 30px;
+            border: 1px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
+            background: rgba(0, 255, 255, 0.02);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
             text-align: center;
-            box-shadow: 0 0 20px #00ffff;
         }
         h1 {
-            font-size: 24px;
+            font-size: 20px;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
         }
         textarea {
             width: 100%;
-            height: 150px;
-            background: #111;
-            border: 1px solid #00ffff;
-            border-radius: 10px;
-            color: #ccc;
-            padding: 10px;
-            font-size: 14px;
+            height: 180px;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            color: #00ffcc;
+            padding: 12px;
+            font-size: 15px;
             resize: none;
             box-sizing: border-box;
-        }
-        button {
-            margin-top: 20px;
-            width: 100%;
-            padding: 15px;
-            background-color: #00ffff;
-            border: none;
-            border-radius: 10px;
-            color: #000;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
+            outline: none;
             transition: 0.3s;
         }
+        textarea:focus {
+            border-color: #00ffff;
+        }
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.4s;
+        }
         button:hover {
-            background-color: #00cccc;
-            box-shadow: 0 0 15px #00ffff;
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 20px #00ffff;
+        }
+        #status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #555;
+            height: 15px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>AI Humanizer</h1>
-    <textarea id="inputText" placeholder="Paste AI text..."></textarea>
-    <button onclick="humanizeText()">Humanize</button>
+    <h1>AI HUMANIZER</h1>
+    <textarea id="inputText" placeholder="Paste AI text here..."></textarea>
+    <button onclick="processText()">HUMANIZE TEXT</button>
+    <div id="status"></div>
 </div>
 
 <script>
-    function humanizeText() {
-        let text = document.getElementById('inputText').value;
-        if(text.trim() === "") {
-            alert("Please paste some text first!");
-            return;
-        }
+    function processText() {
+        let area = document.getElementById('inputText');
+        let status = document.getElementById('status');
+        let originalText = area.value;
 
-        // Simple Humanizing Logic: Replacing formal words with natural ones
-        let humanized = text
+        if(originalText.trim() === "") return;
+
+        status.innerText = "Humanizing content...";
+        
+        // AI to Human Logic
+        let humanized = originalText
             .replace(/Artificial Intelligence/g, "Smart technology")
             .replace(/significantly transformed/g, "really changed")
             .replace(/essential to understand/g, "important to know")
@@ -87,8 +103,22 @@
             .replace(/integration/g, "mixing")
             .replace(/necessary step/g, "must-do thing");
 
-        document.getElementById('inputText').value = humanized;
-        alert("Text Humanized Successfully!");
+        // Typewriter Effect (Line by Line feeling)
+        area.value = "";
+        let i = 0;
+        status.innerText = "Finalizing...";
+        
+        function typeWriter() {
+            if (i < humanized.length) {
+                area.value += humanized.charAt(i);
+                i++;
+                setTimeout(typeWriter, 15); // Speed of typing
+            } else {
+                status.innerText = "Humanized Successfully.";
+                setTimeout(() => { status.innerText = ""; }, 3000);
+            }
+        }
+        typeWriter();
     }
 </script>
 
