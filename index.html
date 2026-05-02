@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Humanizer</title>
+<style>
+body{background:#000;color:#0ff;font-family:sans-serif;text-align:center;padding:50px}
+.c{border:2px solid #0ff;padding:30px;border-radius:20px;display:inline-block;background:#111}
+textarea{width:300px;height:200px;background:#222;color:#fff;border-radius:10px;padding:10px;border:1px solid #0ff}
+button{display:block;width:100%;margin-top:20px;padding:15px;background:#0ff;color:#000;font-weight:bold;border:none;border-radius:10px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="c">
+<h2>AI HUMANIZER</h2>
+<textarea id="t" placeholder="Paste AI text..."></textarea>
+<button onclick="h()">HUMANIZE</button>
+</div>
+<script>
+function h(){
+let x=document.getElementById('t');
+let s=x.value;
+s=s.replace(/moreover/gi,"furthermore").replace(/however/gi,"yet").replace(/therefore/gi,"so");
+x.value=s;
+alert("Optimized!");
+}
+</script>
+</body>
+</html>
