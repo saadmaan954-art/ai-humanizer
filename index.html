@@ -1,126 +1,42 @@
- ​<!DOCTYPE html>
-<html lang="en">
-<head>  <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Humanizer | Elite Tier</title>
-    <style>
-        body {
-            background-color: #050505;
-            color: #00ffff;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-        .container {
-            border: 1px solid #00ffff;
-            border-radius: 15px;
-            padding: 25px;
-            width: 90%;
-            max-width: 450px;
-            background: rgba(0, 255, 255, 0.02);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            text-align: center;
-        }
-        h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-        }
-        textarea {
-            width: 100%;
-            height: 180px;
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 8px;
-            color: #00ffcc;
-            padding: 12px;
-            font-size: 15px;
-            resize: none;
-            box-sizing: border-box;
-            outline: none;
-            transition: 0.3s;
-        }
-        textarea:focus {
-            border-color: #00ffff;
-        }
-        button {
-            margin-top: 15px;
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid #00ffff;
-            color: #00ffff;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.4s;
-        }
-        button:hover {
-            background: #00ffff;
-            color: #000;
-            box-shadow: 0 0 20px #00ffff;
-        }
-        #status {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #555;
-            height: 15px;
-        }
-    </style>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elite Tool</title>
+<style>
+ body{background:#050505;color:#0ff;font-family:sans-serif;text-align:center;padding:10px}
+ .box{border:1px solid #0ff;border-radius:10px;padding:15px;max-width:350px;margin:10px auto;background:rgba(0,255,255,0.02)}
+ textarea{width:100%;height:70px;background:#000;border:1px solid #333;color:#0f6;padding:5px;box-sizing:border-box}
+ button{width:100%;padding:10px;margin-top:5px;background:none;border:1px solid #0ff;color:#0ff;font-weight:bold}
+ img{width:100%;margin-top:10px;display:none;border:1px solid #0f6}
+</style>
 </head>
 <body>
-
-<div class="container">
-    <h1>AI HUMANIZER</h1>
-    <textarea id="inputText" placeholder="Paste AI text here..."></textarea>
-    <button onclick="processText()">HUMANIZE TEXT</button>
-    <div id="status"></div>
+<div class="box">
+ <h3>AI HUMANIZER</h3>
+ <textarea id="txt" placeholder="Paste AI text..."></textarea>
+ <button onclick="hmn()">HUMANIZE</button>
+ <button onclick="cpy()" style="border-color:#0f6;color:#0f6">COPY</button>
 </div>
-
+<div class="box">
+ <h3>IMAGE GEN</h3>
+ <textarea id="pr" placeholder="Describe image..."></textarea>
+ <button onclick="gen()">GENERATE</button>
+ <div id="st" style="font-size:11px;color:#555"></div>
+ <img id="res" src="">
+</div>
 <script>
-    function processText() {
-        let area = document.getElementById('inputText');
-        let status = document.getElementById('status');
-        let originalText = area.value;
-
-        if(originalText.trim() === "") return;
-
-        status.innerText = "Humanizing content...";
-        
-        // AI to Human Logic
-        let humanized = originalText
-            .replace(/Artificial Intelligence/g, "Smart technology")
-            .replace(/significantly transformed/g, "really changed")
-            .replace(/essential to understand/g, "important to know")
-            .replace(/vast amounts of data/g, "lots of info")
-            .replace(/nuance of human emotion/g, "real human feelings")
-            .replace(/integration/g, "mixing")
-            .replace(/necessary step/g, "must-do thing");
-
-        // Typewriter Effect (Line by Line feeling)
-        area.value = "";
-        let i = 0;
-        status.innerText = "Finalizing...";
-        
-        function typeWriter() {
-            if (i < humanized.length) {
-                area.value += humanized.charAt(i);
-                i++;
-                setTimeout(typeWriter, 15); // Speed of typing
-            } else {
-                status.innerText = "Humanized Successfully.";
-                setTimeout(() => { status.innerText = ""; }, 3000);
-            }
-        }
-        typeWriter();
-    }
+ function hmn(){
+  let a=document.getElementById('txt'),t=a.value.replace(/Artificial Intelligence/g,"Smart tech").replace(/significant/g,"great");
+  a.value="";let i=0;function tp(){if(i<t.length){a.value+=t.charAt(i);i++;setTimeout(tp,20)}}tp();
+ }
+ function cpy(){let a=document.getElementById('txt');a.select();document.execCommand('copy');alert("Copied!");}
+ function gen(){
+  let p=document.getElementById('pr').value,r=document.getElementById('res'),s=document.getElementById('st');
+  if(!p)return;s.innerText="Loading...";r.style.display="none";
+  r.src=`https://pollinations.ai/p/${encodeURIComponent(p+" realistic,8k")}?width=1080&height=1080&model=flux&seed=${Math.random()}`;
+  r.onload=()=>{r.style.display="block";s.innerText="Ready.";};
+ }
 </script>
-
 </body>
 </html>
